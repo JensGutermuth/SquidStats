@@ -1,6 +1,19 @@
 <?php
+
+include("dbhandler.class.php");
+include("confighandler.class.php");
 class logHandler {
     public function setup() {
+        $db = DbHandler::getInstance();
+        $sql = "CREATE TABLE `log` (
+            `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+            `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+            `origin` TEXT NOT NULL ,
+            `severity` INT NOT NULL ,
+            `message` TEXT NOT NULL ,
+            INDEX ( `time` )
+            ) ENGINE = MYISAM;";
+        $db->query($sql);
     }
     
     const SEVERITY_DEBUG = 1;
@@ -31,9 +44,9 @@ class logHandler {
             $db = DbHandler::getInstance();
 
             // Doppelte Leerzeichen entfernen, sind in 99,9% der Fälle Schwachsinn
-            $message = preg_replace('/\s{2}/',$message);
+            $message = preg_replace('/\s+/',$message);
 
-            $sql = "INSERT (origin, severity, message) INTO log VALUES
+            $sql = "INSERT INTO log (origin, severity, message) VALUES
                 (\"${$db->escape_string($origin)}\",
                 \"${$db->escape_string($severity)}\",
                 \"${$db->escape_string($message)}\");";
