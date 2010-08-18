@@ -16,7 +16,7 @@ class DbHandler
         $this->checkDbConnection();
     }
     
-    private checkDbConnection() {
+    private function checkDbConnection() {
         if (!$db) {
             $config = new configHandler();
             if (!$config->exists(array("db.host", "db.username",
@@ -25,7 +25,7 @@ class DbHandler
             }
             if (!$this->$db = new mysqli($config->get("db.host"),
                     $config->get("db.username"), $config->get("db.password"),
-                    $config->get("db.dbname"), $config->get("db.port")) {
+                    $config->get("db.dbname"), $config->get("db.port"))) {
                 throw new Exception("DB-Verbindung fehlgeschlagen");
             }
         }
@@ -40,7 +40,7 @@ class DbHandler
     
     /* MySQLi API zugreifbar machen */
     
-    public __get($name) {
+    public function __get($name) {
         if (isset($this->db->$name)) {
             return $this->db->$name;
         } else {
@@ -48,7 +48,7 @@ class DbHandler
         }
     }
     
-    public __call($name, $args) {
+    public function __call($name, $args) {
         if(is_callable(array($this->db, $name))) {
             if ($name = "query") { // Loggen ist was feines :)
                 $log = new logHandler();

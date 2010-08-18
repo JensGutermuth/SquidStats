@@ -11,7 +11,7 @@ class logHandler {
     const SEVERITY_ERROR = 40;
     const SEVERITY_FATAL_ERROR = 50;
     
-    private enabled = true;
+    private $enabled = true;
     // Um nicht selbst Log-Einträge zu erzeugen und damit in endloser Rekursion zu enden
     
     public function log($severity, $message) {
