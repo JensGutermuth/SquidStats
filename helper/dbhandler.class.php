@@ -1,4 +1,7 @@
 <?php
+
+require("confighandler.class.php");
+
 /*
  * Dies ist die Kapslung des Datenbankzugriffs. Diese Klasse kann genauso
  * wie ein MySQLi-Object benutzt werden, Ausnahme ist das erstellen, das
@@ -47,6 +50,11 @@ class DbHandler
     
     public __call($name, $args) {
         if(is_callable(array($this->db, $name))) {
+            if ($name = "query") { // Loggen ist was feines :)
+                $log = new logHandler();
+                $sql = preg_replace("/\r|\n/s", "", $args);
+                $log->log(logHandler::SEVERITY_DB_QUERY, $sql);
+            }
             call_user_func(array($this->db, $name), $args);
         } else {
             throw new Exception("Ungültige Methode");
