@@ -4,7 +4,7 @@
  * @Description: Verwaltung von Einstellungen & Eigenschaften
  * @Version: 0.1
  **/
-	class ConfigHandler
+	class ConfigHandler implements arrayaccess
 	{
 		private $db;
         static private $instance;
@@ -58,6 +58,12 @@
 			$result->free();
         }
         
+        public function exists($name)
+        {
+            return isset($this->property);
+        }
+        
+        // Zugriff über Eigenschaften
 		public function __get($name)
 		{
             $this->get($name);
@@ -68,6 +74,27 @@
             $this->set($name, $val);
 		}
 		
-		
+        // arrayaccess
+        
+        public offsetExists ($name)
+        {
+            return $this->exists($name);
+        }
+            
+        public offsetGet($name)
+        {
+            return $this->get($name);
+        }
+            
+        public offsetSet($name, $val)
+        {
+            $this->set($name, $val);
+        }
+            
+        public offsetUnset($name)
+        {
+            // ToDo
+        }
+            		
 	}
 ?>
