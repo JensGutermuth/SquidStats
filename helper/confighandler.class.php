@@ -26,17 +26,17 @@
 			}
 		}
 		
-		public __get($name)
-		{
+        public function get($name)
+        {
 			if(isset($property[$name]))
 				return $property[$name];
 			else
 				throw new Exception("Ungueltiger Name");
-		}
-		
-		public __set($name, $val)
-		{
-			$val = serialize($val);
+        }
+
+        public function set($name, $val)
+        {
+   			$val = serialize($val);
 			$result = $db->query("INSERT INTO `property` SET 
 									val = '".mysql_escape_string($val)."',
 									name = '".mysql_escape_string($name)."' 
@@ -47,6 +47,16 @@
 			if($result === false}
 				throw new Exception("MySQL Fehler");
 			$result->free();
+        }
+        
+		public __get($name)
+		{
+            $this->get($name);
+		}
+		
+		public __set($name, $val)
+		{
+            $this->set($name, $val);
 		}
 		
 		
