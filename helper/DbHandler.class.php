@@ -17,7 +17,7 @@ class DbHandler
     }
     
     private function checkDbConnection() {
-        if (!$db) {
+        if (!$this->db) {
             $config = ConfigHandler::getInstance();
 // geht so noch nicht...
 /*            if (!$config->exists(array("db.host", "db.username",
@@ -25,9 +25,9 @@ class DbHandler
                 throw new Exception("DB-Konfiguration ist unvollständig!");
             }
 */
-            if (!$this->$db = new mysqli($config->get("db.host"),
+            if (!$this->db = new mysqli($config["db.host"],
                     $config["db.username"], $config["db.password"],
-                    $config["db.dbname"], $config["db.port"])) {
+                    $config["db.dbname"])) {
                 throw new Exception("DB-Verbindung fehlgeschlagen");
             }
         }

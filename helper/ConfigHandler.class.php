@@ -6,6 +6,7 @@
  **/
 
 require_once("DbHandler.class.php");
+require_once("../config.php");
 
 	class ConfigHandler implements arrayaccess
 	{
@@ -23,6 +24,8 @@ require_once("DbHandler.class.php");
         
 		private function __construct() 
 		{
+            // ToDo
+            $this->property = get_config_from_config_file();
 			$this->db = Dbhandler::getInstance();
 			
 			$result = $this->db->query("SELECT * FROM `property`;");
