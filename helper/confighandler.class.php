@@ -20,16 +20,16 @@
         
 		private function __construct() 
 		{
-			$db = Dbhandler::getInstance();
+			$this->db = Dbhandler::getInstance();
 			
-			$result = $db->query("SELECT * FROM `property`;");
+			$result = $this->db->query("SELECT * FROM `property`;");
 			if($result === false}
 				throw new Exception("MySQL Fehler");
 			else
 			{
 				while($data = $result->fetch_assoc())
 				{
-					$property[$data['name']] = unserialize($data['val']);
+					$this->property[$data['name']] = unserialize($data['val']);
 				}
 				$result->free();
 			}
@@ -37,16 +37,17 @@
 		
         public function get($name)
         {
-			if(isset($property[$name]))
-				return $property[$name];
+			if(isset($this->property[$name]))
+				return $this->property[$name];
 			else
 				throw new Exception("Ungueltiger Name");
         }
 
         public function set($name, $val)
         {
+            $this->property[$name] = $val;
    			$val = serialize($val);
-			$result = $db->query("INSERT INTO `property` SET 
+			$result = $this->db->query("INSERT INTO `property` SET 
 									val = '".mysql_escape_string($val)."',
 									name = '".mysql_escape_string($name)."' 
 								ON DUPLICATE KEY
@@ -74,6 +75,11 @@
             $this->set($name, $val);
 		}
 		
+		public function __isset($name)
+		{
+            $this->exists($name);
+		}
+
         // arrayaccess
         
         public function offsetExists ($name)
