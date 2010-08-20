@@ -76,22 +76,22 @@
 		
         // arrayaccess
         
-        public offsetExists ($name)
+        public function offsetExists ($name)
         {
             return $this->exists($name);
         }
             
-        public offsetGet($name)
+        public function offsetGet($name)
         {
             return $this->get($name);
         }
             
-        public offsetSet($name, $val)
+        public function offsetSet($name, $val)
         {
             $this->set($name, $val);
         }
             
-        public offsetUnset($name)
+        public function offsetUnset($name)
         {
             // ToDo
         }
