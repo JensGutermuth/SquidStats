@@ -1,6 +1,6 @@
 <?php
 
-require("confighandler.class.php");
+require_once("ConfigHandler.class.php");
 
 /*
  * Dies ist die Kapslung des Datenbankzugriffs. Diese Klasse kann genauso
@@ -18,7 +18,7 @@ class DbHandler
     
     private function checkDbConnection() {
         if (!$db) {
-            $config = new configHandler();
+            $config = ConfigHandler::getInstance();
 // geht so noch nicht...
 /*            if (!$config->exists(array("db.host", "db.username",
                 "db.password", "db.dbname", "db.port"))) { // config unvollständig

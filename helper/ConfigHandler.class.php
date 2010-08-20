@@ -4,6 +4,9 @@
  * @Description: Verwaltung von Einstellungen & Eigenschaften
  * @Version: 0.1
  **/
+
+require_once("DbHandler.class.php");
+
 	class ConfigHandler implements arrayaccess
 	{
 		private $db;
@@ -23,7 +26,7 @@
 			$this->db = Dbhandler::getInstance();
 			
 			$result = $this->db->query("SELECT * FROM `property`;");
-			if($result === false}
+			if($result === false)
 				throw new Exception("MySQL Fehler");
 			else
 			{
@@ -48,13 +51,13 @@
             $this->property[$name] = $val;
    			$val = serialize($val);
 			$result = $this->db->query("INSERT INTO `property` SET 
-									val = '".mysql_escape_string($val)."',
-									name = '".mysql_escape_string($name)."' 
+									val = '".$this->db->escape_string($val)."',
+									name = '".$this->db->escape_string($name)."' 
 								ON DUPLICATE KEY
 									UPDATE `property` SET 
-									val = '".mysql_escape_string($val)."',
-									name = '".mysql_escape_string($name)."';");
-			if($result === false}
+									val = '".$this->db->escape_string($val)."',
+									name = '".$this->db->escape_string($name)."';");
+			if($result === false)
 				throw new Exception("MySQL Fehler");
 			$result->free();
         }

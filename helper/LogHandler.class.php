@@ -1,8 +1,8 @@
 <?php
 
-include("dbhandler.class.php");
-include("confighandler.class.php");
-class logHandler {
+require_once("DbHandler.class.php");
+require_once("ConfigHandler.class.php");
+class LogHandler {
     public function setup() {
         $db = DbHandler::getInstance();
         $sql = "CREATE TABLE `log` (
@@ -29,7 +29,7 @@ class logHandler {
     
     public function log($severity, $message) {
         $this->enabled = false;
-        $config = new configHandler();
+        $config = ConfigHandler::getInstance();
         if (($severity > $config.get("log.min_severity", 0)) && ($this->enabled)) {
             $trace = debug_backtrace(false);
             $origin = "";
