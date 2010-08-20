@@ -7,8 +7,17 @@
 	class ConfigHandler
 	{
 		private $db;
+        static private $instance;
 		private $property = array();
 		
+        public static function getInstance()
+        {
+            if(!self::$instance) {
+                self::$instance = new ConfigHandler();
+            }
+            return self::$instance;            
+        }
+        
 		private function __construct() 
 		{
 			$db = Dbhandler::getInstance();
@@ -49,12 +58,12 @@
 			$result->free();
         }
         
-		public __get($name)
+		public function __get($name)
 		{
             $this->get($name);
 		}
 		
-		public __set($name, $val)
+		public function __set($name, $val)
 		{
             $this->set($name, $val);
 		}
