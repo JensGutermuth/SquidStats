@@ -1,4 +1,4 @@
-<?php
+<?
 /**
  * @Author: Felix hirt
  * @Description: Verwaltung von Einstellungen & Eigenschaften
