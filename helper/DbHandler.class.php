@@ -58,7 +58,7 @@ class DbHandler
                 $sql = preg_replace("/\r|\n/s", "", $args);
                 $log->log(logHandler::SEVERITY_DB_QUERY, $sql);
             }
-            call_user_func(array($this->db, $name), $args);
+            return call_user_func_array(array($this->db, $name), $args);
         } else {
             throw new Exception("Ungültige Methode");
         }

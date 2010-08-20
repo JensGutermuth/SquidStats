@@ -13,6 +13,7 @@ require_once("../config.php");
 		private $db;
         static private $instance;
 		private $property = array();
+        private $property_ready = false;
 		
         public static function getInstance()
         {
@@ -22,14 +23,12 @@ require_once("../config.php");
             return self::$instance;            
         }
         
-		private function __construct() 
-		{
-            // ToDo
-            $this->property = get_config_from_config_file();
-			$this->db = Dbhandler::getInstance();
+        private function loadPropertiesFromDb() {
+            $this->property_ready = true;
+            $this->db = Dbhandler::getInstance();
 			
 			$result = $this->db->query("SELECT * FROM `property`;");
-			if($result === false)
+			if(!$result)
 				throw new Exception("MySQL Fehler");
 			else
 			{
@@ -39,18 +38,43 @@ require_once("../config.php");
 				}
 				$result->free();
 			}
+        }
+        
+		private function __construct() 
+		{
+            // ToDo
+            $this->property = get_config_from_config_file();
 		}
+        
+        public function setup() {
+            $db = DbHandler::getInstance();
+            $sql = "CREATE TABLE `property` (
+                `name` VARCHAR( 255 ) NOT NULL ,
+                `val` TEXT NOT NULL ,
+                PRIMARY KEY ( `name` )
+                ) ENGINE = MYISAM ;";
+            $db->query($sql);
+        }
 		
         public function get($name)
         {
+//            echo "bla ".var_dump($this)."\n";
 			if(isset($this->property[$name]))
 				return $this->property[$name];
 			else
-				throw new Exception("Ungueltiger Name");
+                if (!$this->property_ready) {
+                    $this->loadPropertiesFromDb();
+                    return $this->get($name);
+                } else {
+                    throw new Exception("Ungueltiger Name ".$name);
+                }
         }
 
         public function set($name, $val)
         {
+            if (!$this->property_ready) {
+                $this->loadPropertiesFromDb();
+            }
             $this->property[$name] = $val;
    			$val = serialize($val);
 			$result = $this->db->query("INSERT INTO `property` SET 
@@ -67,6 +91,9 @@ require_once("../config.php");
         
         public function exists($name)
         {
+            if (!$this->property_ready) {
+                $this->loadPropertiesFromDb();
+            }
             return isset($this->property[$name]);
         }
         
