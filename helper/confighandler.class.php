@@ -61,7 +61,7 @@
         
         public function exists($name)
         {
-            return isset($this->property);
+            return isset($this->property[$name]);
         }
         
         // Zugriff über Eigenschaften
