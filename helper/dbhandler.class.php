@@ -19,13 +19,15 @@ class DbHandler
     private function checkDbConnection() {
         if (!$db) {
             $config = new configHandler();
-            if (!$config->exists(array("db.host", "db.username",
+// geht so noch nicht...
+/*            if (!$config->exists(array("db.host", "db.username",
                 "db.password", "db.dbname", "db.port"))) { // config unvollständig
                 throw new Exception("DB-Konfiguration ist unvollständig!");
             }
+*/
             if (!$this->$db = new mysqli($config->get("db.host"),
-                    $config->get("db.username"), $config->get("db.password"),
-                    $config->get("db.dbname"), $config->get("db.port"))) {
+                    $config["db.username"], $config["db.password"],
+                    $config["db.dbname"], $config["db.port"])) {
                 throw new Exception("DB-Verbindung fehlgeschlagen");
             }
         }
@@ -41,6 +43,7 @@ class DbHandler
     /* MySQLi API zugreifbar machen */
     
     public function __get($name) {
+        // $obj->$var greif auf die Objeckteigenschaft mit dem Namen zu, der in $var steht.
         if (isset($this->db->$name)) {
             return $this->db->$name;
         } else {
