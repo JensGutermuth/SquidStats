@@ -31,7 +31,7 @@ class LogHandler {
     public function log($severity, $message) {
         $this->enabled = false;
         $config = ConfigHandler::getInstance();
-        if (($severity > $config->get("log.min_severity", 0)) && ($this->enabled)) {
+        if (($severity > $config->log['min_severity']) && ($this->enabled)) {
             $trace = debug_backtrace(false);
             $origin = "";
             if (isset($trace[1])) {

@@ -25,9 +25,9 @@ class DbHandler
                 throw new Exception("DB-Konfiguration ist unvollständig!");
             }
 */
-            if (!$this->db = new mysqli($config["db.host"],
-                    $config["db.username"], $config["db.password"],
-                    $config["db.dbname"])) {
+            if (!$this->db = new mysqli($config->db['host'],
+                    $config->db['username'], $config->db['password'],
+                    $config->db['dbname'])) {
                 throw new Exception("DB-Verbindung fehlgeschlagen");
             }
         }
