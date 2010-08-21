@@ -25,34 +25,38 @@ class LogHandler {
     const SEVERITY_ERROR = 40;
     const SEVERITY_FATAL_ERROR = 50;
     
-    private $enabled = true;
+    private static $enabled = true;
     // Um nicht selbst Log-Einträge zu erzeugen und damit in endloser Rekursion zu enden
     
     public function log($severity, $message) {
-        $this->enabled = false;
         $config = ConfigHandler::getInstance();
-        if (($severity > $config->log['min_severity']) && ($this->enabled)) {
+        if (($severity > $config->log['min_severity']) and (Loghandler::$enabled)) {
+            Loghandler::$enabled = false;
             $trace = debug_backtrace(false);
+            var_dump($trace);
             $origin = "";
-            if (isset($trace[1])) {
-                $caller = $trace[1];
-                $origin = $caller["file"]." (".$caller["line"].") :";
-                if (!isset($caller['class'])) {
-                    $origin .= $caller['class'].$caller['type'];
+            if (isset($trace[0])) {
+                $caller = $trace[0];
+                $origin = $caller["file"]." (".$caller["line"]."): ";
+//                $origin = "";
+                if (count($trace) > 1) { // Wir wurden aus einer Funktion heraus aufgerufen
+                    $subcaller = $trace[1];
+                    if (isset($subcaller['class'])) { // Klassenfunktion
+                        $origin .= $subcaller['class'].$subcaller['type'];
+                    }
+                    $origin .= $subcaller['function'];
                 }
-                $origin .= $caller['function'];
             }
             $db = DbHandler::getInstance();
 
             // Doppelte Leerzeichen entfernen, sind in 99,9% der Fälle Schwachsinn
-            $message = preg_replace('/\s+/',$message);
-
+            $message = preg_replace('/\s{2,}/', '', $message);
             $sql = "INSERT INTO log (origin, severity, message) VALUES
-                (\"${$db->escape_string($origin)}\",
-                \"${$db->escape_string($severity)}\",
-                \"${$db->escape_string($message)}\");";
+                (\"{$db->escape_string($origin)}\",
+                \"{$db->escape_string($severity)}\",
+                \"{$db->escape_string($message)}\");";
             $db->query($sql);
         }
-        $this->enabled = true;
+        Loghandler::$enabled = true;
     }
 }

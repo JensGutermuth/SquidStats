@@ -25,7 +25,6 @@ class DbHandler
                 throw new Exception("DB-Konfiguration ist unvollständig!");
             }
 */
-            var_dump($config->db);
             if (!$this->db = new mysqli($config->db['host'],
                     $config->db['username'], $config->db['password'],
                     $config->db['dbname'])) {
@@ -54,12 +53,17 @@ class DbHandler
     
     public function __call($name, $args) {
         if(is_callable(array($this->db, $name))) {
-            if ($name = "query") { // Loggen ist was feines :)
+            if ($name == "query") { // Loggen ist was feines :)
                 $log = new logHandler();
-                $sql = preg_replace("/\r|\n/s", "", $args);
+                $sql = preg_replace("/\r|\n/s", "", $args[0]);
                 $log->log(logHandler::SEVERITY_DB_QUERY, $sql);
             }
-            return call_user_func_array(array($this->db, $name), $args);
+            
+              $result = call_user_func_array(array($this->db, $name), $args);
+            if ($this->db->errno != 0) {
+                throw new Exception("MySQL-Fehler ".$this->db->errno.": ".$this->db->error);
+            }
+            return $result;
         } else {
             throw new Exception("Ungültige Methode");
         }
