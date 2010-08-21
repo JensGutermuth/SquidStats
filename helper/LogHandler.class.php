@@ -33,7 +33,6 @@ class LogHandler {
         if (($severity > $config->log['min_severity']) and (Loghandler::$enabled)) {
             Loghandler::$enabled = false;
             $trace = debug_backtrace(false);
-            var_dump($trace);
             $origin = "";
             if (isset($trace[0])) {
                 $caller = $trace[0];
