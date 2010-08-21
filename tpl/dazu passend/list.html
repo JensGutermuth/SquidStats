@@ -1,0 +1,76 @@
+{% extends "hits/base.html" %}
+{% load i18n %}
+{% block additional_headers %}
+    <script type="text/javascript" src="{{ MEDIA_URL }}hits_list.js"></script>
+{% endblock additional_headers %}
+
+{% block content %}
+<h1>{% trans "Pageviews" %}</h1>
+<table class=pageview_table>
+    <col width="175">
+    <col width="*">
+    <col width="150">
+    <col width="150">
+
+	<tr>
+		<th class=pageview_time>{% trans "time" %}</th>
+		<th class=pageview_domain>{% trans "domain" %}</th>
+		<th class=pageview_client>{% trans "client" %}</th>
+		<th class=pageview_block>{% trans "block" %}</th>
+	</tr>
+    {% for page in pageviews %}
+	<tr class="pageview_pageview" data-pageview-id={{ page.id }}>
+	<td colspan="1">&nbsp;</td>
+	<td colspan="1"><a href="javascript:void(0);" class="open_pageview_link"><img src="{{ MEDIA_URL }}icons/folder_explore.png" alt="{% trans "open folder" %}" \></a>
+                    <a href="http://{{ page.domain }}"><img src="{{ MEDIA_URL }}icons/world_go.png" \>{{ page.domain }}</a></td>
+	<td colspan="1">{{ page.client }}</td>
+	</tr>
+        <tr style="display: none;" class="">
+{% comment %} This has been replaced by AJAX-logic
+        <td colspan=4>
+        <table class=pageview_hit_table>
+            <tr>
+            <th class=pageview_hit_time_header></th>
+            <th class=pageview_hit_domain_header>{% trans "url" %}</th>
+            <th class=pageview_hit_size_header>{% trans "size" %}</th>
+            <th class=pageview_hit_block_header>&nbsp;</th>
+            </tr>
+            {% for hit in page.hit_set.select_related.all %}
+            <tr class=pageview_hit_row>
+                <td class=pageview_hit_time>{{ hit.time }}</td>
+                <td class=pageview_hit_url><a class=latestSites_urllink" target="_blank" href="{{ hit.protocol }}://{{ hit.domain }}:{{ hit.port }}/{{ hit.path }}">{{ hit.protocol }}://{{ hit.domain }}:{{ hit.port }}{{ hit.path }}</a></td>
+                <td class=pageview_hit_size>{{ hit.size }}</td>
+                <td>&nbsp;</td>
+            </tr>
+            
+            {% endfor %}
+        </table>
+        </td>
+{% endcomment %}    
+        </tr>
+    {% endfor %}
+{% comment %}    
+    {% for hit in hits %}
+    {% ifchanged hit.pageview.id %}
+	<tr class=pageview_pageview>
+	<td colspan="1">&nbsp;</td>
+	<td colspan="1">{{ hit.pageview.domain }}</td>
+	<td colspan="1">{{ hit.pageview.client }}</td>
+	</tr>
+        <tr>
+		<th class=pageview_time></th>
+		<th class=pageview_domain>{% trans "url" %}</th>
+		<th class=pageview_client>{% trans "size" %}</th>
+		<th class=pageview_block></th>
+        </tr>
+    {% endifchanged %}
+        <tr class=latestSites_record>
+            <td class=latestSites_record_time>{{ hit.time }}</td>
+            <td class=latestSites_record_url><a class=latestSites_urllink" target="_blank" href="{{ hit }}">{{ hit }}</a></td>
+            <td class=latestSites_record_block>{{ hit.size }}</td>
+        </tr>
+    {% endfor %}
+{% endcomment %}    
+    </table>
+{% endblock content %}
+

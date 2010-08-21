@@ -1,6 +1,6 @@
-<?php
+<?
 
-require("confighandler.class.php");
+require_once("ConfigHandler.class.php");
 
 /*
  * Dies ist die Kapslung des Datenbankzugriffs. Diese Klasse kann genauso
@@ -17,15 +17,17 @@ class DbHandler
     }
     
     private function checkDbConnection() {
-        if (!$db) {
-            $config = new configHandler();
-            if (!$config->exists(array("db.host", "db.username",
+        if (!$this->db) {
+            $config = ConfigHandler::getInstance();
+// geht so noch nicht...
+/*            if (!$config->exists(array("db.host", "db.username",
                 "db.password", "db.dbname", "db.port"))) { // config unvollständig
                 throw new Exception("DB-Konfiguration ist unvollständig!");
             }
-            if (!$this->$db = new mysqli($config->get("db.host"),
-                    $config->get("db.username"), $config->get("db.password"),
-                    $config->get("db.dbname"), $config->get("db.port"))) {
+*/
+            if (!$this->db = new mysqli($config["db.host"],
+                    $config["db.username"], $config["db.password"],
+                    $config["db.dbname"])) {
                 throw new Exception("DB-Verbindung fehlgeschlagen");
             }
         }
@@ -41,6 +43,7 @@ class DbHandler
     /* MySQLi API zugreifbar machen */
     
     public function __get($name) {
+        // $obj->$var greif auf die Objeckteigenschaft mit dem Namen zu, der in $var steht.
         if (isset($this->db->$name)) {
             return $this->db->$name;
         } else {
@@ -55,7 +58,7 @@ class DbHandler
                 $sql = preg_replace("/\r|\n/s", "", $args);
                 $log->log(logHandler::SEVERITY_DB_QUERY, $sql);
             }
-            call_user_func(array($this->db, $name), $args);
+            return call_user_func_array(array($this->db, $name), $args);
         } else {
             throw new Exception("Ungültige Methode");
         }

@@ -1,0 +1,265 @@
+/* 
+helles Blau: #b7d4ff
+dunkles Blau: #4c96ff
+sehr dunkles blau: #205aac
+blau für Schrift auf weiß: #123361
+*/
+
+/* General styles */
+body {
+    margin:0;
+    padding:0;
+    border:0;			/* This removes the border around the viewport in old versions of IE */
+    width:100%;
+    background:#fff;
+    min-width:600px;    /* Minimum width of layout - remove line if not required */
+						/* The min-width property does not work in old versions of Internet Explorer */
+	font-size:90%;
+}
+a {
+	color: #123361;
+}
+
+a:hover {
+	color: #000;
+	background: #b7d4ff;
+	text-decoration:none;
+}
+
+h1, h2, h3 {
+    margin:.8em 0 .2em 0;
+    padding:0;
+}
+p {
+    margin:.4em 0 .8em 0;
+    padding:0;
+}
+img {
+	margin:0;
+}
+
+a img {
+	border : none;
+}
+
+/* Tooltips */
+/* Basisgerüst:
+<a href="javascript:void(0)" class="tooltip"> whatever <span class="info" style="width: 200px">Tooltip</span> </a>
+.tooltip span.info {
+	display:none;
+}
+
+.tooltip:hover span.info {
+	display:block;
+	position:absolute;
+	height:auto;
+	background:#FFF;
+}
+
+
+/* Header styles */
+#header {
+    clear:both;
+    float:left;
+    width:100%;
+    height: 60px;
+	border-bottom:1px solid #000;
+	background: #b7d4ff;
+}
+#header p,
+#header h1,
+#header h2 {
+    padding:.4em 15px 0 15px;
+    margin:0;
+}
+
+/* 2 column left menu settings */
+.page {
+	background: #b7d4ff; 	/* Der Hintergrund des Menüs */
+	position:relative;		/* This fixes the IE7 overflow hidden bug and stops the layout jumping out of place */
+    clear:both;
+    float:left;
+    width:100%;			/* width of whole page */
+	overflow:hidden;	/* This chops off any overhanging divs */
+}
+.page .colright {
+    float:left;
+    width:200%;
+	position:relative;
+	left:200px;
+    background:#fff;
+}
+.page .contentwrap {
+    float:right;
+    width:50%;
+    position:relative;
+    right:200px;
+    padding-bottom:1em;
+}
+.page .content {
+    margin:0 15px 0 215px;
+    position:relative;
+    right:100%;
+    overflow:hidden;
+}
+.page .menu {
+    float:left;
+    width:180px;
+    position:relative;
+    right:200px;
+}
+
+
+.page .menu .loaded a {
+        background-color:#205aac ! important;
+        color: #FFF ! important;
+}
+
+.page .menu li {
+        list-style:none;
+        display:inline;
+}
+
+.page .menu ul {
+        display:inline;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+}
+
+.page .menu li.active a {
+        color:#000;
+}
+
+.page .menu li a,
+.page .menu li a:link {
+        float:left;
+        background-color:#4c96ff;
+        margin:5px;
+        padding:7px 8px 7px 2px;
+        color:#000;
+        text-decoration:none;
+        width: 100%;
+}
+
+.page .menu li a:visited {
+}
+
+.page .menu li a:hover {
+        background-color:#205aac;
+}
+
+
+/* Footer styles */
+#footer {
+    width:100%;
+	border-top:1px solid #000;
+}
+#footer p {
+    padding:10px;
+    margin:0;
+}
+
+/* Dialog styles */
+
+#overlay{
+	position: absolute;
+	top: 0%;
+	left: 0%;
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	z-index:1001;
+	-moz-opacity: 0.8;
+	opacity:.80;
+	filter: alpha(opacity=80);
+    
+    display: none;
+}
+ 
+#login {
+	position: absolute;
+	top: 35%;
+	left: 50%;
+	margin-top: -125px;
+	margin-left: -150px;
+	width: 300px;
+	height: 150px;
+	padding: 16px;
+	background-color: white;
+	z-index:1002;
+	overflow: auto;
+    
+    /* Login ist noch nicht implementiert, also einfach ausblenden :)*/
+    display: none;
+}
+
+/* hits/list.html */
+
+.pageview_table {
+	width: 100%;
+}
+
+.pageview_data td {
+	border-style: solid;
+	border-width: 1px;
+	border-color: #b7d4ff;
+}
+
+.pageview_time, .pageview_domain, .pageview_client, .pageview_block {
+	border-style: solid;
+	border-width: 1px;
+	border-color: #b7d4ff;
+}
+
+.pageview_hit_row {
+}
+
+.pageview_hit_table {
+    /*display: none;*/
+    width: 100%;
+}
+
+.pageview_hit_time, .pageview_hit_time_header {
+    width: 175px;
+}
+
+.pageview_hit_domain, .pageview_hit_domain_header {
+}
+
+.pageview_hit_size, .pageview_hit_size_header {
+    width: 75px;
+}
+
+.pageview_hit_block, .pageview_hit_block_header {
+    width: 150px;
+}
+
+.pageview_hit_url {
+	display: block;
+	margin-left: 10px;
+}
+
+
+/* sites */
+
+.sites_detail {
+	display: none;
+	width: 400px;
+	overflow: visible;
+}
+
+.sites_domainTable {
+	width: 100%
+}
+
+.sites_record td {
+	border-style: solid;
+	border-width: 1px;
+	border-color: #b7d4ff;
+}
+
+.siteDetail_hitTable {
+	padding-left:20px;
+	width: 100%
+}
