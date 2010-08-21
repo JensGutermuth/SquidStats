@@ -9,4 +9,6 @@
     $vars["test"] = "Lorem Ipsum";
     $vars["test2"] = "Ne, ne ne";
     $tpl->render("index", $vars);
+    $log = new LogHandler();
+    $log->log(LogHandler::SEVERITY_DEBUG, "User hat Seite index.php aufgerufen");
 ?>

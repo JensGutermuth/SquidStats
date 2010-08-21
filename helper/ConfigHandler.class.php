@@ -46,7 +46,7 @@ require_once("../config.php");
             $this->property = get_config_from_config_file();
 		}
         
-        public function setup() {
+        public static function setup() {
             $db = DbHandler::getInstance();
             $sql = "CREATE TABLE `property` (
                 `name` VARCHAR( 255 ) NOT NULL ,
@@ -58,7 +58,6 @@ require_once("../config.php");
 		
         public function get($name)
         {
-//            echo "bla ".var_dump($this)."\n";
 			if(isset($this->property[$name]))
 				return $this->property[$name];
 			else
@@ -100,7 +99,7 @@ require_once("../config.php");
         // Zugriff über Eigenschaften
 		public function __get($name)
 		{
-            $this->get($name);
+            return $this->get($name);
 		}
 		
 		public function __set($name, $val)

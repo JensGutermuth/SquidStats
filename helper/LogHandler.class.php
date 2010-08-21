@@ -4,7 +4,7 @@ require_once("DbHandler.class.php");
 require_once("ConfigHandler.class.php");
 
 class LogHandler {
-    public function setup() {
+    static public function setup() {
         $db = DbHandler::getInstance();
         $sql = "CREATE TABLE `log` (
             `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
