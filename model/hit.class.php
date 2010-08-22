@@ -6,23 +6,23 @@ require_once("../helper/DbHandler.class.php");
 require_once("base.class.php");
 
 class HitModel extends BaseModel{
-    public function setup()
+    static public function setup()
     {
     }
 
-    public function get($condition);
+    public function get($condition)
     {
     }
     
-    public function set($id, $value, $createIfNotExists = true);
+    public function set($id, $value, $createIfNotExists = true)
     {
     }
     
-    public function count($condition);
+    public function count($condition)
     {
     }
     
-    public function delete($condition);
+    public function delete($condition)
     {
     }
     

@@ -6,7 +6,7 @@ require_once("ConfigHandler.class.php");
 class LogHandler {
     static public function setup() {
         $db = DbHandler::getInstance();
-        $sql = "CREATE TABLE `log` (
+        $sql = "CREATE TABLE IF NOT EXISTS `log` (
             `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
             `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
             `origin` TEXT NOT NULL ,

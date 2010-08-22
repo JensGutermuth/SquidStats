@@ -46,9 +46,9 @@ require_once("../config.php");
             $this->property = get_config_from_config_file();
 		}
         
-        public static function setup() {
+        static public function setup() {
             $db = DbHandler::getInstance();
-            $sql = "CREATE TABLE `property` (
+            $sql = "CREATE TABLE IF NOT EXISTS `property` (
                 `name` VARCHAR( 255 ) NOT NULL ,
                 `val` TEXT NOT NULL ,
                 PRIMARY KEY ( `name` )
