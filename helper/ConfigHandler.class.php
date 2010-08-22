@@ -17,6 +17,8 @@ require_once("../config.php");
 		private $property_changed = array();
 		private $property_ready = false;
 		private $any_filechanges = false;
+        
+        private $basepath = '';
 		
 		public static function getInstance()
 		{
@@ -57,8 +59,10 @@ require_once("../config.php");
 		
 		private function __construct() 
 		{ 
-			ini_set("error_reporting", E_ALL | E_STRICT);
-			//get_config_from_config_file();
+            $this->property = get_config_from_config_file();
+            foreach ($this->property as $key => $value) {
+                $this->property_file[$key] = 'y';
+            }
 		}
 		
 		public function __destruct()
@@ -116,7 +120,7 @@ require_once("../config.php");
 												val = '".$this->db->escape_string($val)."',
 												name = '".$this->db->escape_string($name)."' 
 											ON DUPLICATE KEY
-												UPDATE `property` SET 
+												UPDATE
 												val = '".$this->db->escape_string($val)."',
 												name = '".$this->db->escape_string($name)."';");
 				if($result === false)
@@ -179,16 +183,21 @@ require_once("../config.php");
 		
 		private function writeFileConf()
 		{
-			$file = fopen("config.php", "w+", 1);
+			$basepath = $this->property['basepath']; // Existiert immer
+            $file = fopen($basepath."/config.php", "w+", 1);
 			fputs($file, "<?php \n".
-						 "function get_config_from_config_file() {".
-						 "\$config = ConfigHandler::getInstance();\n");
+                         "require_once(\"helper/ConfigHandler.class.php\");\n".
+						 "function get_config_from_config_file() {\n".
+						 "  \$config = ConfigHandler::getInstance();\n");
 			
 			foreach($this->property_file as $key=> &$data)
 			{
-				fputs($file, '$config->setFileconf('.$key.', '.var_export($this->property[$key], true).', 0); '."\n");
+                if ($key != 'basepath') { // wird speziell gehandhabt
+                    fputs($file, '  $config->setFileConf("'.$key.'", '.var_export($this->property[$key], true).', 0); '."\n");
+                }
 			}
-			
+			fputs($file, '  $config->setFileConf("basepath", dirname(__FILE__), 0);'."\n");
+
 			fputs($file, "} ?>");
 			fclose($file);
 		}
@@ -208,8 +217,10 @@ require_once("../config.php");
 			$this->any_filechanges = true;
 		}		
 	}
-	
+// Tests:	
+/*
 	$conf = ConfigHandler::getInstance();
 	$conf->setFileConf("bla", "f00bar1", 1);
 	$conf->setFileConf("bla1", "f00bar2", 1);
+*/
 ?>
