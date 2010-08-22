@@ -24,21 +24,14 @@
     <div class="colright">
         <div class="contentwrap">
             <div class="content" id="content">
-            <!-- Content -->
-            <!-- End Content -->
+                <? echo $v['content']; ?>
                 <div id="footer">
-                    <p>Layout und Seite (c) 2009 <a href="mailto:jens@gutermuth-online.de">Jens Gutermuth</a>. Diese Seite nutzt <a href="http://www.famfamfam.com/lab/icons/silk/">Silk-Icons</a></p>
+                    <p>Layout und Seite (c) 2009 Felix Hirt und Jens Gutermuth. Diese Seite nutzt <a href="http://www.famfamfam.com/lab/icons/silk/">Silk-Icons</a></p>
                 </div>
             </div>
         </div>
         <div class="menu">
-            <!-- Menu -->
-            <ul id="menu">
-                <li id="latestSites"><a href="javascript:void(0)" title="latestSites">Letzte Seiten</a></li>
-                <li id="sites"><a href="javascript:void(0)" title="sites">Seiten</a></li>
-                <li id="hosts"><a href="javascript:void(0)" title="hosts">Rechner</a></li>
-                <li id="contact"><a href="javascript:void(0)" title="contact">Contact</a></li>
-            </ul>
+            <? echo $v['menu']; ?>
         </div>
     </div>
 </div>

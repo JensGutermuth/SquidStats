@@ -1,6 +1,7 @@
 <?
 
 require_once("ConfigHandler.class.php");
+require_once("LogHandler.class.php");
 
 /*
  * Dies ist die Kapslung des Datenbankzugriffs. Diese Klasse kann genauso
@@ -54,8 +55,8 @@ class DbHandler
     public function __call($name, $args) {
         if(is_callable(array($this->db, $name))) {
             if ($name == "query") { // Loggen ist was feines :)
-                $log = new logHandler();
-                $sql = preg_replace("/\r|\n/s", "", $args[0]);
+                $log = new LogHandler();
+                $sql = preg_replace("/\r|\n/s", " ", $args[0]);
                 $log->log(logHandler::SEVERITY_DB_QUERY, $sql);
             }
             

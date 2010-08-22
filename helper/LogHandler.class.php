@@ -49,7 +49,7 @@ class LogHandler {
             $db = DbHandler::getInstance();
 
             // Doppelte Leerzeichen entfernen, sind in 99,9% der Fälle Schwachsinn
-            $message = preg_replace('/\s{2,}/', '', $message);
+            $message = preg_replace('/\s{2,}/', ' ', $message);
             $sql = "INSERT INTO log (origin, severity, message) VALUES
                 (\"{$db->escape_string($origin)}\",
                 \"{$db->escape_string($severity)}\",
