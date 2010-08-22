@@ -1,6 +1,6 @@
 <?
 
-require_once("ConfigHandler.class.php");
+require_once(dirname(__FILE__)."/ConfigHandler.class.php");
 
 class TemplateHandler
 {

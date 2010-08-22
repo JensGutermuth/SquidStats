@@ -1,7 +1,7 @@
 <?
 
-require_once("DbHandler.class.php");
-require_once("ConfigHandler.class.php");
+require_once(dirname(__FILE__)."/DbHandler.class.php");
+require_once(dirname(__FILE__)."/ConfigHandler.class.php");
 
 class LogHandler {
     static public function setup() {

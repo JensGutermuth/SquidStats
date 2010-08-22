@@ -1,8 +1,8 @@
 <?
     // TEST des Templatesystems, das kann hier nicht so bleiben :)
-    require_once("../helper/ConfigHandler.class.php");
-    require_once("../helper/LogHandler.class.php");
-    require_once("../helper/TemplateHandler.class.php");
+    require_once(dirname(__FILE__)."/../helper/ConfigHandler.class.php");
+    require_once(dirname(__FILE__)."/../helper/LogHandler.class.php");
+    require_once(dirname(__FILE__)."/../helper/TemplateHandler.class.php");
     
     $config = ConfigHandler::getInstance();
     $config->log = array('min_severity' => 0);

@@ -1,7 +1,6 @@
 <?
 
-require_once("ConfigHandler.class.php");
-require_once("LogHandler.class.php");
+require_once(dirname(__FILE__)."/ConfigHandler.class.php");
 
 /*
  * Dies ist die Kapslung des Datenbankzugriffs. Diese Klasse kann genauso
