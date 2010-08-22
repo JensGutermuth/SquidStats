@@ -4,6 +4,11 @@
     require_once("../helper/LogHandler.class.php");
     require_once("../helper/TemplateHandler.class.php");
     
+    $config = ConfigHandler::getInstance();
+    $config->log = array('min_severity' => 0);
+    $config->tpl = array('template_dir' => "tpl");
+    $config->log['min_severity'] = 20;
+//    $config->tpl['template_dir'] = "tpl";
     function test_log() {
         $log = new LogHandler();
         $log->log(LogHandler::SEVERITY_DEBUG, "User hat Seite index.php aufgerufen");
