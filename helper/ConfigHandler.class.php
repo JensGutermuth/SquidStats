@@ -80,12 +80,12 @@ require_once("../config.php");
 									val = '".$this->db->escape_string($val)."',
 									name = '".$this->db->escape_string($name)."' 
 								ON DUPLICATE KEY
-									UPDATE `property` SET 
+									UPDATE  
 									val = '".$this->db->escape_string($val)."',
 									name = '".$this->db->escape_string($name)."';");
 			if($result === false)
 				throw new Exception("MySQL Fehler");
-			$result->free();
+//			$result->free();
         }
         
         public function exists($name)
