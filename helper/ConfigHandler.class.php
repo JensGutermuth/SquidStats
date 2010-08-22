@@ -32,10 +32,10 @@ if (file_exists(dirname(__FILE__)."/../config.php")) {
 			return self::$instance;			
 		}
 		
-		public function setup() 
+		public static function setup() 
 		{
 			$db = DbHandler::getInstance();
-			$sql = "CREATE TABLE `property` (
+			$sql = "CREATE TABLE IF NOT EXISTS `property` (
 					`name` VARCHAR( 255 ) NOT NULL ,
 					`val` TEXT NOT NULL ,
 					PRIMARY KEY ( `name` )
