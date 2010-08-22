@@ -6,7 +6,11 @@
  **/
  
 require_once("DbHandler.class.php");
-require_once("../config.php");
+if (file_exists("../config.php")) {
+    require_once("../config.php"); // Lokale Konfiguration
+} else {
+    require_once("../config_default.php"); // Default
+}    
 
 	class ConfigHandler implements arrayaccess
 	{
