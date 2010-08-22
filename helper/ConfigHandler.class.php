@@ -4,12 +4,12 @@
  * @Description: Verwaltung von Einstellungen & Eigenschaften
  * @Version: 0.1
  **/
- 
-require_once("DbHandler.class.php");
-if (file_exists("../config.php")) {
-    require_once("../config.php"); // Lokale Konfiguration
+
+require_once(dirname(__FILE__)."/DbHandler.class.php");
+if (file_exists(dirname(__FILE__)."/../config.php")) {
+    require_once(dirname(__FILE__)."/../config.php"); // Lokale Konfiguration
 } else {
-    require_once("../config_default.php"); // Default
+    require_once(dirname(__FILE__)."/../config_default.php"); // Default
 }    
 
 	class ConfigHandler implements arrayaccess
@@ -190,7 +190,7 @@ if (file_exists("../config.php")) {
 			$basepath = $this->property['basepath']; // Existiert immer
             $file = fopen($basepath."/config.php", "w+", 1);
 			fputs($file, "<?php \n".
-                         "require_once(\"helper/ConfigHandler.class.php\");\n".
+                         "require_once(dirname(__FILE__).\"/helper/ConfigHandler.class.php\");\n".
 						 "function get_config_from_config_file() {\n".
 						 "  \$config = ConfigHandler::getInstance();\n");
 			
