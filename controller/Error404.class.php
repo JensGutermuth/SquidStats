@@ -10,3 +10,4 @@ class Error404 extends BaseController {
         $tpl->render('404', array());
     }
 }
+?>
