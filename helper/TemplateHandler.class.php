@@ -29,5 +29,13 @@ class TemplateHandler
             unset($t);
         }
     }
+	
+	public function str_maxlength($str, $len=80)
+	{
+		if(strlen($str) > $len)
+			return substr($str, 0, $len-3)."...";
+		
+		return $str;
+	}
 }
 ?>
