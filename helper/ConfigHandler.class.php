@@ -192,17 +192,17 @@ if (file_exists(dirname(__FILE__)."/../config.php")) {
 			fputs($file, "<?php \n".
                          "require_once(dirname(__FILE__).\"/helper/ConfigHandler.class.php\");\n".
 						 "function get_config_from_config_file() {\n".
-						 "  \$config = ConfigHandler::getInstance();\n");
+                         "  \$config = array();");
 			
 			foreach($this->property_file as $key=> &$data)
 			{
                 if ($key != 'basepath') { // wird speziell gehandhabt
-                    fputs($file, '  $config->setFileConf("'.$key.'", '.var_export($this->property[$key], true).', 0); '."\n");
+                    fputs($file, '  $config["'.$key.'"] =  '.var_export($this->property[$key], true).'; '."\n");
                 }
 			}
-			fputs($file, '  $config->setFileConf("basepath", dirname(__FILE__), 0);'."\n");
+			fputs($file, '  $config["basepath"] = dirname(__FILE__);'."\n");
 
-			fputs($file, "} ?>");
+			fputs($file, '} ?>');
 			fclose($file);
 		}
 		
