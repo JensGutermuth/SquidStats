@@ -1,6 +1,7 @@
 <?
 
-require_once("ConfigHandler.class.php");
+require_once(dirname(__FILE__)."/ConfigHandler.class.php");
+require_once(dirname(__FILE__)."/LogHandler.class.php");
 
 /*
  * Dies ist die Kapslung des Datenbankzugriffs. Diese Klasse kann genauso
@@ -25,9 +26,9 @@ class DbHandler
                 throw new Exception("DB-Konfiguration ist unvollständig!");
             }
 */
-            if (!$this->db = new mysqli($config["db.host"],
-                    $config["db.username"], $config["db.password"],
-                    $config["db.dbname"])) {
+            if (!$this->db = new mysqli($config->db['host'],
+                    $config->db['username'], $config->db['password'],
+                    $config->db['dbname'])) {
                 throw new Exception("DB-Verbindung fehlgeschlagen");
             }
         }
@@ -53,12 +54,17 @@ class DbHandler
     
     public function __call($name, $args) {
         if(is_callable(array($this->db, $name))) {
-            if ($name = "query") { // Loggen ist was feines :)
-                $log = new logHandler();
-                $sql = preg_replace("/\r|\n/s", "", $args);
+            if ($name == "query") { // Loggen ist was feines :)
+                $log = new LogHandler();
+                $sql = preg_replace("/\r|\n/s", " ", $args[0]);
                 $log->log(logHandler::SEVERITY_DB_QUERY, $sql);
             }
-            return call_user_func_array(array($this->db, $name), $args);
+            
+              $result = call_user_func_array(array($this->db, $name), $args);
+            if ($this->db->errno != 0) {
+                throw new Exception("MySQL-Fehler ".$this->db->errno.": ".$this->db->error);
+            }
+            return $result;
         } else {
             throw new Exception("Ungültige Methode");
         }

@@ -1,7 +1,8 @@
 <?
 abstract class BaseModel
 {
-    abstract public function setup();
+    static public function setup() { // sollte immernoch implementiert werden..
+    }
 
     abstract public function get($condition);
 

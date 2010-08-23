@@ -1,6 +1,6 @@
 <?
 
-require_once("ConfigHandler.class.php");
+require_once(dirname(__FILE__)."/ConfigHandler.class.php");
 
 class TemplateHandler
 {
@@ -17,7 +17,7 @@ class TemplateHandler
 
     public function render($template, $vars) {
         $config = ConfigHandler::getInstance();
-        $tpl_filename = $config["basepath"]."/".$config["tpl.template_dir"].'/'.$template.'.tpl.php';
+        $tpl_filename = $config['basepath']."/".$config['tpl']['template_dir'].'/'.$template.'.tpl.php';
         if (is_file($tpl_filename)) {
             global $v;
             global $t;

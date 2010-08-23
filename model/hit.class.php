@@ -1,28 +1,28 @@
 <?
-require_once("../helper/ConfigHandler.class.php");
-require_once("../helper/LogHandler.class.php");#
-require_once("../helper/DbHandler.class.php");
+require_once(dirname(__FILE__)."/../helper/ConfigHandler.class.php");
+require_once(dirname(__FILE__)."/../helper/LogHandler.class.php");#
+require_once(dirname(__FILE__)."/../helper/DbHandler.class.php");
 
-require_once("base.class.php");
+require_once(dirname(__FILE__)."/base.class.php");
 
 class HitModel extends BaseModel{
-    public function setup()
+    static public function setup()
     {
     }
 
-    public function get($condition);
+    public function get($condition)
     {
     }
     
-    public function set($id, $value, $createIfNotExists = true);
+    public function set($id, $value, $createIfNotExists = true)
     {
     }
     
-    public function count($condition);
+    public function count($condition)
     {
     }
     
-    public function delete($condition);
+    public function delete($condition)
     {
     }
     
