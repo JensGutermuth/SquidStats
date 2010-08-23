@@ -5,7 +5,7 @@
 	<meta name="description" content="The Left Menu 2 column Liquid Layout. Pixel widths. Cross-Browser. Equal Height Columns.">
 	<meta name="keywords" content="The Left Menu 2 column Liquid Layout. Pixel widths. Cross-Browser. Equal Height Columns.">
 	<meta name="robots" content="index, follow">
-    <link type="text/css" rel="stylesheet" href="css/hits.css" />
+    <link type="text/css" rel="stylesheet" href="<? echo $c->baseurl;?>/css/hits.css" />
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.js"></script>
     </style>
     <!--[if lt IE 7]>

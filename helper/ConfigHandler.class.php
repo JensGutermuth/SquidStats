@@ -20,7 +20,7 @@ if (file_exists(dirname(__FILE__)."/../config.php")) {
 		private $property_file = array();
 		private $property_changed = array();
 		private $property_ready = false;
-		private $any_filechanges = false;
+		private $any_filechanges = true;
         
         private $basepath = '';
 		
@@ -191,7 +191,22 @@ if (file_exists(dirname(__FILE__)."/../config.php")) {
             $file = fopen($basepath."/config.php", "w+", 1);
 			fputs($file, "<?php \n".
                          "require_once(dirname(__FILE__).\"/helper/ConfigHandler.class.php\");\n".
+                         
+                           
+
 						 "function get_config_from_config_file() {\n".
+                         "  // Hilfsfunktionen\n
+  function getBaseUrl() {
+    \$pageURL = 'http';
+    if (isset(\$_SERVER['HTTPS'])) {\$pageURL .= 's';}
+      \$pageURL .= '://';
+    if (\$_SERVER['SERVER_PORT'] != '80') {
+      \$pageURL .= \$_SERVER['SERVER_NAME'].':'.\$_SERVER['SERVER_PORT'].dirname(\$_SERVER['SCRIPT_NAME']);
+    } else {
+      \$pageURL .= \$_SERVER['SERVER_NAME'].dirname(\$_SERVER['SCRIPT_NAME']);
+    }
+    return \$pageURL;
+  }\n".
                          "  \$config = array();\n");
 			
 			foreach($this->property_file as $key=> &$data)
@@ -201,6 +216,7 @@ if (file_exists(dirname(__FILE__)."/../config.php")) {
                 }
 			}
 			fputs($file, '  $config["basepath"] = dirname(__FILE__);'."\n");
+			fputs($file, '  $config["baseurl"] = getBaseUrl();'."\n");
             fputs($file, "  return \$config;\n");
 			fputs($file, '} ?>');
 			fclose($file);
