@@ -10,5 +10,6 @@ function get_config_from_config_file() {
   $config["log"] =  'log'; 
   $config["tpl"] =  'tpl'; 
   $config["basepath"] = dirname(__FILE__);
+  return $config;
 }
 ?>

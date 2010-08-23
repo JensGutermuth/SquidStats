@@ -192,7 +192,7 @@ if (file_exists(dirname(__FILE__)."/../config.php")) {
 			fputs($file, "<?php \n".
                          "require_once(dirname(__FILE__).\"/helper/ConfigHandler.class.php\");\n".
 						 "function get_config_from_config_file() {\n".
-                         "  \$config = array();");
+                         "  \$config = array();\n");
 			
 			foreach($this->property_file as $key=> &$data)
 			{
@@ -201,7 +201,7 @@ if (file_exists(dirname(__FILE__)."/../config.php")) {
                 }
 			}
 			fputs($file, '  $config["basepath"] = dirname(__FILE__);'."\n");
-
+            fputs($file, "  return \$config;\n";
 			fputs($file, '} ?>');
 			fclose($file);
 		}
