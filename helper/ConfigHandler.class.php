@@ -20,7 +20,7 @@ if (file_exists(dirname(__FILE__)."/../config.php")) {
 		private $property_file = array();
 		private $property_changed = array();
 		private $property_ready = false;
-		private $any_filechanges = true;
+		private $any_filechanges = false;
         
         private $basepath = '';
 		
@@ -211,7 +211,7 @@ if (file_exists(dirname(__FILE__)."/../config.php")) {
 			
 			foreach($this->property_file as $key=> &$data)
 			{
-                if ($key != 'basepath') { // wird speziell gehandhabt
+                if (($key != 'basepath') && ($key != 'baseurl')) { // wird speziell gehandhabt
                     fputs($file, '  $config["'.$key.'"] =  '.var_export($this->property[$key], true).'; '."\n");
                 }
 			}
