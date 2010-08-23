@@ -40,6 +40,7 @@
     }
 
     // nach Klasse suchen und diese laden
+    $called = false; // wurde etwas aufgerufen?
     $dir = $config->basepath.'/controller';
     if($dirhandle = dir($dir)) {
         while (false !== ($file = $dirhandle->read())) {
@@ -52,11 +53,14 @@
                     $obj = new $classname;
                     if (is_callable(array($obj, $function))) {
                         call_user_func(array($obj, $function), $args);
+                        $called = true;
                     }
                 }
             }
         }
         $dirhandle->close();
     }
-    
+    if (!$called) {
+        header("HTTP/1.0 404 Not Found");
+    }
 ?>
