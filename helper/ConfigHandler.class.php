@@ -201,7 +201,7 @@ if (file_exists(dirname(__FILE__)."/../config.php")) {
                 }
 			}
 			fputs($file, '  $config["basepath"] = dirname(__FILE__);'."\n");
-            fputs($file, "  return \$config;\n";
+            fputs($file, "  return \$config;\n");
 			fputs($file, '} ?>');
 			fclose($file);
 		}
