@@ -1,6 +1,7 @@
 <?
     // TEST des Templatesystems, das kann hier nicht so bleiben :)
     require_once(dirname(__FILE__)."/../helper/ConfigHandler.class.php");
+    require_once(dirname(__FILE__)."/../controller/BaseController.class.php");
     require_once(dirname(__FILE__)."/../helper/LogHandler.class.php");
     require_once(dirname(__FILE__)."/../helper/TemplateHandler.class.php");
     $config = ConfigHandler::getInstance();
@@ -51,8 +52,8 @@
                     // Den aus dem Dateinamen nehmen, da der richtige Groß/Kleinschreibung hat
                     $classname = substr($file, 0, strlen($file)-strlen('.class.php'));
                     $obj = new $classname;
-                    if (is_callable(array($obj, $function))) {
-                        call_user_func(array($obj, $function), $args);
+                    if (is_callable(array($obj, $function)) && ($obj instanceof BaseController)) {
+                        echo call_user_func(array($obj, $function), $args);
                         $called = true;
                     }
                 }
@@ -61,6 +62,16 @@
         $dirhandle->close();
     }
     if (!$called) {
-        header("HTTP/1.0 404 Not Found");
+        $pageURL = 'http';
+        if (isset($_SERVER["HTTPS"])) {$pageURL .= "s";}
+            $pageURL .= "://";
+        if ($_SERVER["SERVER_PORT"] != "80") {
+            $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["SCRIPT_NAME"];
+        } else {
+            $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["SCRIPT_NAME"];
+        }
+        header("HTTP/1.1 404 Not Found");
+        header("Status: 404 Not Found");
+        header("Location: $pageURL/error404/");
     }
 ?>
