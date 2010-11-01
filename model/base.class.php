@@ -1,21 +1,26 @@
 <?
-abstract class BaseModel
-{
-    static public function setup() { // sollte immernoch implementiert werden..
+require_once(dirname(__FILE__)."/../helper/DbHandler.class.php");
+
+abstract class BaseModel {
+  // Low-Level interface
+
+  static public function setup() { // sollte immernoch implementiert werden..
+  }
+
+  abstract public function getById($id, $fields);
+
+  abstract public function set($id, $values, $createIfNotExists = false);
+
+  abstract public function count($distinctField = NULL);
+
+  abstract public function deleteById($id);
+  
+  protected function returnQueryResult($sql, $count=-1, $start=0) {
+    $db = DbHandler::getInstance();
+    if ($count > 0) {
+      $sql .= " LIMIT $start,$count";
     }
-
-    abstract public function get($condition);
-
-    abstract public function set($id, $value, $createIfNotExists = true);
-
-    abstract public function count($condition);
-
-    abstract public function delete($condition);
-    
-    protected function constructWhere($condition)
-    {
-        foreach ($condition as $key => $value) {
-            
-        }
-    }
+    $db_result = $db->query($sql);
+    return $db_result->fetch_all(MYSQLI_ASSOC);
+  }
 }
