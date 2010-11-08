@@ -6,6 +6,10 @@
         return $strend == $end;
     }
     
+    // damit es so früh wie möglich Logs gibt
+    require_once("../helper/LogHandler.class.php");
+    LogHandler::setup();
+    
     function findFiles($dir, &$files) {
         if($dirhandle = dir($dir)) {
             while (false !== ($file = $dirhandle->read())) {
