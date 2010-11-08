@@ -15,6 +15,16 @@ function get_config_from_config_file() {
     return $pageURL;
   }
   $config = array();
+
+/* User einrichten mit:
+    CREATE USER 'squidstats'@'localhost' IDENTIFIED BY 'squidstats';
+
+    GRANT USAGE ON * . * TO 'squidstats'@'localhost' IDENTIFIED BY 'squidstats' WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0 ;
+
+    CREATE DATABASE IF NOT EXISTS `squidstats` ;
+
+    GRANT ALL PRIVILEGES ON `squidstats` . * TO 'squidstats'@'localhost';
+*/
   $config["db"] =  array (
   'host' => 'localhost',
   'username' => 'squidstats',

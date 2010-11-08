@@ -7,7 +7,7 @@ abstract class BaseModel {
   static public function setup() { // sollte immernoch implementiert werden..
   }
 
-  abstract public function getById($id, $fields);
+  abstract public function getById($id);
 
   abstract public function set($id, $values, $createIfNotExists = false);
 
