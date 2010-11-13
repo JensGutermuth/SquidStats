@@ -44,14 +44,10 @@ class CssCompressor extends CodeCompressorBase {
   }
   public function replaceUrlWithDataUrl($treffer) {
     $config = ConfigHandler::getInstance();
-    $file = 'http://fpgames.de/fpg/'.$treffer[1];
-//    $file = $config->basepath.'/web/'.$treffer[1];
-//    if (file_exists($file)) {
-//      if (filesize($file) < self::MAX_FILESIZE_FOR_DATA_URL) {
-    if (true) {
+    $file = $config->basepath.'/web/'.$treffer[1];
+    if (file_exists($file)) {
+      if (filesize($file) < self::MAX_FILESIZE_FOR_DATA_URL) {
         $content   = file_get_contents($file); 
-        echo "$file (".strlen($content)." Bytes)<br>\n";
-      if (strlen($content) < self::MAX_FILESIZE_FOR_DATA_URL)  {
         $content_base64 = base64_encode($content);
         $finfo = finfo_open(FILEINFO_MIME_TYPE); // return mime type ala mimetype extension
         $mime = finfo_buffer($finfo, $content);
