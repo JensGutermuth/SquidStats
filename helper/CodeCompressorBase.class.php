@@ -1,7 +1,7 @@
 <?
 abstract class CodeCompressorBase {
-  public function getLink($files) {
-    $files = sort($files); // Reihnfolge muss egal sein
+  public function getCompressedHtmlTag($files) {
+    sort($files); // Reihenfolge muss egal sein
     $fileinfo = array();
     foreach ($files as $file) {
       if (!file_exists($file)) {
@@ -12,32 +12,27 @@ abstract class CodeCompressorBase {
       // Einiges an Informationen, die eindeutig für eine Version
       // der Datei sind, aber dennoch schnell zu beschaffen
       $tmp['name'] = $file;
-      $tmp['mtime'] = filemtime($file)
+      $tmp['mtime'] = filemtime($file);
       $tmp['size'] = filesize($file);
       $fileinfo[] = $tmp;
     }
     $md5 = md5(serialize($fileinfo));
-    if (!file_exists($this->getFilename($hash))) {
-      $this->compress($files, $this->getFilename($hash));
+    if (!file_exists($this->getFilename($md5))) {
+      $this->compress($files, $this->getFilename($md5));
     }
-    echo '<link rel="stylesheet" type="text/css" href="'.$this->getLinkpath($md5).'" />'
+    echo $this->getHtmlTag($md5);
   }
   
+  /*
+   * Erzeuge einen Link.
+   * zB: <link rel="stylesheet" type="text/css" href="style.css" />
+   */
+  abstract protected function getHtmlTag($hash);
+
   /*
    * Erzeuge einen Dateinamen
    */
+  abstract protected function getFilename($hash);
   
-  abstract protected function getFilename($hash) {
-  }
-  
-  /*
-   * Sollte der Dateiname nicht als Pfad im Link verwendet werden können,
-   * muss diese Funktion überschrieben werden.
-   */
-  protected function getLinkpath($hash) {
-    return $this->getFilename($hash);
-  }
-  
-  abstract protected function compress($files, $destFile) {
-  }
+  abstract protected function compress($files, $destFile);
 }

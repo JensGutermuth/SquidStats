@@ -7,9 +7,9 @@ class JsCompressor extends CodeCompressorBase {
     return $config->basepath.'/web/cache/js/'.$hash.'.css';
   }
 
-  protected function getLinkpath($hash) {
+  protected function getHtmlTag($hash) {
     $config = ConfigHandler::getInstance();
-    return $config->baseurl.'/cache/js/'.$hash.'.css';
+    return '<script type="text/javascript" src="'.$config->baseurl.'cache/css/'.$hash.'.css" ></script>';
   }
   
   protected function compress($files, $destFile) {
