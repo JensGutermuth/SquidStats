@@ -26,14 +26,15 @@ class CssCompressor extends CodeCompressorBase {
 
   protected function getHtmlTag($hash) {
     $config = ConfigHandler::getInstance();
+    $result = '<link rel="stylesheet" type="text/css" href="'.$config->baseurl.'cache/css/'.$hash.'.css" />'."\n";
     if ($config->CssCompressor_generateDataurls) {
-      return '<link rel="stylesheet" type="text/css" href="'.$config->baseurl.'cache/css/'.$hash.'.css" />
-      <!--[if lte IE 6]>
+      $result .= '<!--[if lte IE 6]>
       <link rel="stylesheet" type="text/css" href="'.$config->baseurl.'cache/css/'.$hash.'-lte-ie7.css" />
-      <![endif]-->'; // Hack für IE7 und kleiner, da die keine data-urls unterstützen
-    } else {
-      return '<link rel="stylesheet" type="text/css" href="'.$config->baseurl.'cache/css/'.$hash.'.css" />';
+      <![endif]-->'."\n"; // Hack für IE7 und kleiner, da die keine data-urls unterstützen
     }
+//    $result .= '<a href="'.$config->baseurl.'cache/css/'.$hash.'.css" >Stylesheet</a><br>';
+//    $result .= '<a href="'.$config->baseurl.'cache/css/'.$hash.'-lte-ie7.css" >IE-Stylesheet</a><br>';
+    return $result;
   }
   
   protected function compress($files, $destFile) {
@@ -75,6 +76,13 @@ class CssCompressor extends CodeCompressorBase {
   }
 
   public function replaceUrlWithDataUrl($treffer) {
+    if (($treffer[1][0] == "'") && ($treffer[1][strlen($treffer[1])-1] == "'")) {
+      $treffer[1] = substr($treffer[1], 1, strlen($treffer[1])-2);
+    }
+    if (($treffer[1][0] == '"') && ($treffer[1][strlen($treffer[1])-1] == '"')) {
+      $treffer[1] = substr($treffer[1], 1, strlen($treffer[1])-2);
+    }
+    
     $config = ConfigHandler::getInstance();
     $file = $config->basepath.'/web/'.$treffer[1];
     if (file_exists($file)) {

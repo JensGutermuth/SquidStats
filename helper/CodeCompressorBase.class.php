@@ -19,7 +19,8 @@ abstract class CodeCompressorBase {
       $fileinfo[] = $tmp;
     }
     $md5 = md5(serialize($fileinfo));
-    if ((!file_exists($this->getFilename($md5))) && ($this->getUseCache())) {
+    if ((!file_exists($this->getFilename($md5))) || (!$this->getUseCache())) {
+      echo "new Version!";
       $this->compress($files, $this->getFilename($md5));
     }
     return $this->getHtmlTag($md5);
