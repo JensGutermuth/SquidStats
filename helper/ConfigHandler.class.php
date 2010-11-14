@@ -1,6 +1,6 @@
 <?
 /**
- * @Author: Felix hirt
+ * @Author: Felix Hirt & Jens Gutermuth
  * @Description: Verwaltung von Einstellungen & Eigenschaften
  * @Version: 0.1
  **/
@@ -141,6 +141,13 @@ if (file_exists(dirname(__FILE__)."/../config.php")) {
         $this->loadPropertiesFromDb();
       }
       return isset($this->property[$name]);
+    }
+    
+    public function getAll() {
+      if (!$this->property_ready) {
+        $this->loadPropertiesFromDb();
+      }
+      return $this->property;
     }
     
     // Zugriff über Eigenschaften
