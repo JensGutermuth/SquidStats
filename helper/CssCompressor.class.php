@@ -26,7 +26,7 @@ class CssCompressor extends CodeCompressorBase {
 
   protected function getHtmlTag($hash) {
     $config = ConfigHandler::getInstance();
-    if ($this->config['generate_dataurls']) {
+    if ($config->CssCompressor_generateDataurls) {
       return '<link rel="stylesheet" type="text/css" href="'.$config->baseurl.'cache/css/'.$hash.'.css" />
       <!--[if lte IE 6]>
       <link rel="stylesheet" type="text/css" href="'.$config->baseurl.'cache/css/'.$hash.'-lte-ie7.css" />
