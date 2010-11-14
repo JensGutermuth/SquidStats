@@ -5,6 +5,7 @@ require_once(dirname(__FILE__)."/ConfigHandler.class.php");
 
 class LogHandler {
     static public function setup() {
+        self::$enabled = false;
         $db = DbHandler::getInstance();
         $sql = "CREATE TABLE IF NOT EXISTS `log` (
             `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
@@ -15,6 +16,7 @@ class LogHandler {
             INDEX ( `time` )
             ) ENGINE = MYISAM;";
         $db->query($sql);
+        self::$enabled = true;
     }
     
     const SEVERITY_DEBUG = 1;
@@ -45,6 +47,9 @@ class LogHandler {
     }
     
     public function log($severity, $message) {
+        if (!self::$enabled) {
+          return;
+        }
         $config = ConfigHandler::getInstance();
         if (($severity > $config->log['min_severity']) and (Loghandler::$enabled)) {
             Loghandler::$enabled = false;

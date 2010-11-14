@@ -2,3 +2,8 @@
 # wird wenn config.php nicht existiert geladen.
 # gespeichert wird immer in config.php, deshalb das ignore.
 /config.php
+
+# Cache-Verzeichnisse
+/web/cache/
+!/web/cache/index.html
+!/web/cache/*/index.html
