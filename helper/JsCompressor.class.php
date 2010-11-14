@@ -1,8 +1,21 @@
 <?
 require_once("CodeCompressorBase.class.php");
 require_once("ConfigHandler.class.php");
+
 class JsCompressor extends CodeCompressorBase {
-  abstract protected function getFilename($hash) {
+  
+  public static function setup() {
+    $config = ConfigHandler::getInstance();
+    $config->JsCompressor_generateGzipVersion = true;
+    $config->JsCompressor_useCache = true;
+  }
+  
+  protected function getUseCache() {
+    $config = ConfigHandler::getInstance();
+    return $config->JsCompressor_useCache;
+  }
+
+  protected function getFilename($hash) {
     $config = ConfigHandler::getInstance();
     return $config->basepath.'/web/cache/js/'.$hash.'.css';
   }
@@ -13,16 +26,18 @@ class JsCompressor extends CodeCompressorBase {
   }
   
   protected function compress($files, $destFile) {
+    $config = ConfigHandler::getInstance();
     $js = '';
     foreach ($files as $file) {
       $js .= "\n".file_get_contents($file);
     }
     $js = JSMin::minify($js);
     file_put_contents($destFile, $js);    
+    if ($config->JsCompressor_generateGzipVersion) {
+      file_put_contents($destFile.'.gz', gzencode($js, 9));    
+    }
   }
 }
-
-<?php
 
 // Quelle: https://github.com/rgrove/jsmin-php
 
@@ -315,6 +330,5 @@ class JSMin {
 
 // -- Exceptions ---------------------------------------------------------------
 class JSMinException extends Exception {}
-?>
 ?>
 

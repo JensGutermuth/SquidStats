@@ -1,5 +1,7 @@
 <?
+
 abstract class CodeCompressorBase {
+  
   public function getCompressedHtmlTag($files) {
     sort($files); // Reihenfolge muss egal sein
     $fileinfo = array();
@@ -17,11 +19,13 @@ abstract class CodeCompressorBase {
       $fileinfo[] = $tmp;
     }
     $md5 = md5(serialize($fileinfo));
-    if (!file_exists($this->getFilename($md5))) {
+    if ((!file_exists($this->getFilename($md5))) && ($this->getUseCache())) {
       $this->compress($files, $this->getFilename($md5));
     }
     return $this->getHtmlTag($md5);
   }
+  
+  abstract protected function getUseCache();
   
   /*
    * Erzeuge einen Link.
