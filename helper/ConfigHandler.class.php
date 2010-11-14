@@ -14,7 +14,6 @@ if (file_exists(dirname(__FILE__)."/../config.php")) {
 
   class ConfigHandler implements arrayaccess
   {
-    private $db;
     static private $instance;
     private $property = array();
     private $property_file = array();
@@ -46,9 +45,9 @@ if (file_exists(dirname(__FILE__)."/../config.php")) {
     private function loadPropertiesFromDb() 
     {
       $this->property_ready = true;
-      $this->db = Dbhandler::getInstance();
+      $db = Dbhandler::getInstance();
       
-      $result = $this->db->query("SELECT * FROM `property`;");
+      $result = $db->query("SELECT * FROM `property`;");
       if(!$result)
         throw new Exception("MySQL Fehler");
       else
@@ -63,10 +62,10 @@ if (file_exists(dirname(__FILE__)."/../config.php")) {
     
     private function __construct() 
     { 
-            $this->property = get_config_from_config_file();
-            foreach ($this->property as $key => $value) {
-                $this->property_file[$key] = 'y';
-            }
+      $this->property = get_config_from_config_file();
+      foreach ($this->property as $key => $value) {
+          $this->property_file[$key] = 'y';
+      }
     }
     
     public function __destruct()
@@ -81,21 +80,23 @@ if (file_exists(dirname(__FILE__)."/../config.php")) {
       {
         if(!isset($this->property_file[$key]))
         {
+          $db = DbHandler::getInstance();
           $val = serialize($val);
-          $result = $this->db->query("INSERT INTO `property` SET 
+          $result = $db->query("INSERT INTO `property` SET 
                           val = '".$this->db->escape_string($val)."',
                           name = '".$this->db->escape_string($name)."' 
                         ON DUPLICATE KEY
                           UPDATE `property` SET 
                           val = '".$this->db->escape_string($val)."',
                           name = '".$this->db->escape_string($name)."';");
-          if($result === false)
+          if($result === false) {
             throw new Exception("MySQL Fehler");
-          $result->free();
+          }
         }
       }
-      if($this->any_filechanges == true)
+      if($this->any_filechanges == true) {
         $this->writeFileConf();
+      }
     }
     
     public function get($name)
@@ -119,17 +120,18 @@ if (file_exists(dirname(__FILE__)."/../config.php")) {
         $this->setFileConf($name, $name);
       else 
       {
+        $db = DbHandler::getInstance();
         $val = serialize($val);
-        $result = $this->db->query("INSERT INTO `property` SET 
-                        val = '".$this->db->escape_string($val)."',
-                        name = '".$this->db->escape_string($name)."' 
+        $result = $db->query("INSERT INTO `property` SET 
+                        val = '".$db->escape_string($val)."',
+                        name = '".$db->escape_string($name)."' 
                       ON DUPLICATE KEY
                         UPDATE
-                        val = '".$this->db->escape_string($val)."',
-                        name = '".$this->db->escape_string($name)."';");
-        if($result === false)
+                        val = '".$db->escape_string($val)."',
+                        name = '".$db->escape_string($name)."';");
+        if($result === false) {
           throw new Exception("MySQL Fehler");
-        $result->free();
+        }
       }
     }
     
