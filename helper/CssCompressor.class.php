@@ -53,6 +53,7 @@ class CssCompressor extends CodeCompressorBase {
     if ($config->CssCompressor_removeWhitespace) {
       $css = str_replace(array("\t", "  ", "   "), "", $css);
       $css = str_replace(array(" {", "  {"), "{", $css);
+      $css = str_replace(array(" :", " : ", " : "), ":", $css);
     }
     if ($config->CssCompressor_generateDataurls) {
       // Files without data-urls for IE <= 7
