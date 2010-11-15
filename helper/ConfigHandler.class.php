@@ -104,20 +104,20 @@ if (file_exists(dirname(__FILE__)."/../config.php")) {
       if(isset($this->property[$name])) {
         return $this->property[$name];
       } else {
-				$tmp = explode('_', $name);
-				if (array_key_exists($tmp[0], $this->property)) {
-					$element = $this->property($tmp[0]);
-					for ($i=0; $i<count($tmp); $i++) {
-						if ((is_array($element)) && (array_key_exists($tmp[$i]))) {
-							$element = $element[$tmp[$i]];
-						} else {
-							if ($i == count($tmp)-1) {
-								return $element;
-							}
-							break;
-						}
-					}
-				}
+        $tmp = explode('_', $name);
+        if (array_key_exists($tmp[0], $this->property)) {
+          $element = $this->property($tmp[0]);
+          for ($i=0; $i<count($tmp); $i++) {
+            if ((is_array($element)) && (array_key_exists($tmp[$i]))) {
+              $element = $element[$tmp[$i]];
+            } else {
+              if ($i == count($tmp)-1) {
+                return $element;
+              }
+              break;
+            }
+          }
+        }
         if (!$this->property_ready) {
           $this->loadPropertiesFromDb();
           return $this->get($name);
@@ -129,12 +129,12 @@ if (file_exists(dirname(__FILE__)."/../config.php")) {
 
     public function set($name, $val)
     {
-			$tmp = explode('_', $name);
-			$element = &$this->property;
-			for ($i=0; $i<=count($tmp)-2; $i++) {
-				$element = &$element[$tmp[$i]];
-			}
-			
+      $tmp = explode('_', $name);
+      $element = &$this->property;
+      for ($i=0; $i<=count($tmp)-2; $i++) {
+        $element = &$element[$tmp[$i]];
+      }
+      
       $element[end($tmp)] = $val;
 
       if(isset($this->property_file[$name]))
