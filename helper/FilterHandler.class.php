@@ -5,7 +5,7 @@ require_once(dirname(__FILE__)."/ConfigHandler.class.php");
 class FilterHandler {
 	static private $instance = NULL;
 	private $filters;
-	protected protected __construct() {
+	protected function __construct() {
 		$this->filters = array();
 	}
 	
