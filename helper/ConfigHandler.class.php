@@ -101,34 +101,55 @@ if (file_exists(dirname(__FILE__)."/../config.php")) {
     
     public function get($name)
     {
-      if(isset($this->property[$name]))
+      if(isset($this->property[$name])) {
         return $this->property[$name];
-      else
+      } else {
+				$tmp = explode('_', $name);
+				if (array_key_exists($tmp[0], $this->property)) {
+					$element = $this->property($tmp[0]);
+					for ($i=0; $i<count($tmp); $i++) {
+						if ((is_array($element)) && (array_key_exists($tmp[$i]))) {
+							$element = $element[$tmp[$i]];
+						} else {
+							if ($i == count($tmp)-1) {
+								return $element;
+							}
+							break;
+						}
+					}
+				}
         if (!$this->property_ready) {
           $this->loadPropertiesFromDb();
           return $this->get($name);
         } else {
           throw new Exception("Ungueltiger Name ".$name);
         }
+      }
     }
 
     public function set($name, $val)
     {
-      $this->property[$name] = $val;
+			$tmp = explode('_', $name);
+			$element = &$this->property;
+			for ($i=0; $i<=count($tmp)-2; $i++) {
+				$element = &$element[$tmp[$i]];
+			}
+			
+      $element[end($tmp)] = $val;
 
       if(isset($this->property_file[$name]))
         $this->setFileConf($name, $name);
       else 
       {
         $db = DbHandler::getInstance();
-        $val = serialize($val);
+        $val = serialize($this->property[$tmp[0]]);
         $result = $db->query("INSERT INTO `property` SET 
                         val = '".$db->escape_string($val)."',
-                        name = '".$db->escape_string($name)."' 
+                        name = '".$db->escape_string($tmp[0])."' 
                       ON DUPLICATE KEY
                         UPDATE
                         val = '".$db->escape_string($val)."',
-                        name = '".$db->escape_string($name)."';");
+                        name = '".$db->escape_string($tmp[0])."';");
         if($result === false) {
           throw new Exception("MySQL Fehler");
         }
