@@ -1,18 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns:v="urn:schemas-microsoft-com:vml" xmlns="http://www.w3.org/1999/xhtml"><head>
 
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta name="description" content="The Left Menu 2 column Liquid Layout. Pixel widths. Cross-Browser. Equal Height Columns.">
-	<meta name="keywords" content="The Left Menu 2 column Liquid Layout. Pixel widths. Cross-Browser. Equal Height Columns.">
-	<meta name="robots" content="index, follow">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="description" content="The Left Menu 2 column Liquid Layout. Pixel widths. Cross-Browser. Equal Height Columns.">
+  <meta name="keywords" content="The Left Menu 2 column Liquid Layout. Pixel widths. Cross-Browser. Equal Height Columns.">
+  <meta name="robots" content="index, follow">
     <link type="text/css" rel="stylesheet" href="<? echo $c->baseurl;?>/css/hits.css" />
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.js"></script>
     </style>
     <!--[if lt IE 7]>
     <style media="screen" type="text/css">
     .col1 {
-	    width:100%;
-	}
+      width:100%;
+  }
     </style>
     <![endif]-->
     <title>Squid Stats und Admin</title>
@@ -26,11 +26,17 @@
             <div class="content" id="content">
                 <? echo $v['content']; ?>
                 <div id="footer">
-                    <p>Layout und Seite (c) 2009 Felix Hirt und Jens Gutermuth. Diese Seite nutzt <a href="http://www.famfamfam.com/lab/icons/silk/">Silk-Icons</a></p>
+                    <p>Layout und Seite (c) 2009-2011 Felix Hirt und Jens Gutermuth. Diese Seite nutzt <a href="http://www.famfamfam.com/lab/icons/silk/">Silk-Icons</a></p>
                 </div>
             </div>
         </div>
         <div class="menu">
+            <ul>
+            <li><a href="log">Log</a></li>
+            <li><a href="config">Config</a></li>
+            <li><a href="helloworld">Hello World</a></li>
+            <li><a href="error404">Error 404</a></li>
+            </ul>
             <? echo $v['menu']; ?>
         </div>
     </div>

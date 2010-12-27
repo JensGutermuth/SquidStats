@@ -12,10 +12,12 @@
     for ($i = 0; $i < count($urlData); $i++) {
         if ($urlData[$i] == basename(__FILE__)) {
             $urlData = array_slice($urlData, $i+1, count($urlData));
+            break;
         }
     }
     function isEmptyString($var) { return $var !== ""; }
     $urlData = array_filter($urlData, "isEmptyString"); // entfernt leere Einträge
+    $urlData = array_values($urlData); // start index at 0
 
     if (isset($urlData[0])) {
         $classname = $urlData[0];

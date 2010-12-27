@@ -57,7 +57,11 @@ class DbHandler
             if ($name == "query") { // Loggen ist was feines :)
                 $log = new LogHandler();
                 $sql = preg_replace("/\r|\n/s", " ", $args[0]);
-                $log->log(logHandler::SEVERITY_DB_QUERY, $sql);
+                if (strncasecmp('SELECT', $sql, strlen('SELECT'))== 0) {
+                  $log->log(logHandler::SEVERITY_DB_QUERY, $sql); // Only a select, not as important
+                } else {
+                  $log->log(logHandler::SEVERITY_DB_QUERY_CHANGE, $sql);
+                }
             }
             
               $result = call_user_func_array(array($this->db, $name), $args);

@@ -21,6 +21,7 @@ class LogHandler {
     
     const SEVERITY_DEBUG = 1;
     const SEVERITY_DB_QUERY = 2;
+    const SEVERITY_DB_QUERY_CHANGE = 3;
     const SEVERITY_ACTION = 10;
     const SEVERITY_NOTICE = 20;
     const SEVERITY_WARNING = 30;

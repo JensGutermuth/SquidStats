@@ -10,6 +10,10 @@
     require_once("../helper/LogHandler.class.php");
     LogHandler::setup();
     
+    // Voraussetzung für vieles
+    require_once("../helper/ConfigHandler.class.php");
+    ConfigHandler::setup();
+    
     function findFiles($dir, &$files) {
         if($dirhandle = dir($dir)) {
             while (false !== ($file = $dirhandle->read())) {
